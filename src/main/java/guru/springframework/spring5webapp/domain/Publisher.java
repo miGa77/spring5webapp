@@ -7,27 +7,29 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 @Entity
-public class Author {
+public class Publisher {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-
-	private String firstName;
-	private String lastName;
-
-	@ManyToMany(mappedBy = "authors")
-	private Set<Book> books = new HashSet<>();
-
-	public Author() {
+	
+	private String name;
+	private String address;
+	
+    @OneToMany
+    @JoinColumn(name = "publisher_id")
+    private Set<Book> books = new HashSet<>();
+	
+	public Publisher() {
 	}
 
-	public Author(String firstName, String lastName) {
-		this.firstName = firstName;
-		this.lastName = lastName;
+	public Publisher(String name, String address) {
+		this.name = name;
+		this.address = address;
 	}
 
 	public Long getId() {
@@ -38,33 +40,33 @@ public class Author {
 		this.id = id;
 	}
 
-	public String getFirstName() {
-		return firstName;
+	public String getName() {
+		return name;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getLastName() {
-		return lastName;
+	public String getAddress() {
+		return address;
 	}
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
-	public Set<Book> getBooks() {
-		return books;
-	}
+    public Set<Book> getBooks() {
+        return books;
+    }
 
-	public void setBooks(Set<Book> books) {
-		this.books = books;
-	}
-
+    public void setBooks(Set<Book> books) {
+        this.books = books;
+    }
+    
 	@Override
 	public String toString() {
-		return "Author [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + "]";
+		return "Publisher [id=" + id + ", name=" + name + ", address=" + address + "]";
 	}
 
 	@Override
@@ -83,7 +85,7 @@ public class Author {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Author other = (Author) obj;
+		Publisher other = (Publisher) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -91,5 +93,5 @@ public class Author {
 			return false;
 		return true;
 	}
-
+	
 }
